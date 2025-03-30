@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization">
+    <meta name="keywords" content="text-to-audio-video generation, joint audio-video generation, audio-video synchronization, diffusion transformer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JavisDiT</title> 
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+    <link rel="icon" href="./static/images/logo.png">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <link rel="stylesheet" href="./static/css/index-gradio.css">
+    <link rel="stylesheet" href="./static/css/live_theme.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <!-- <script src="./static/js/index.js"></script> -->
+</head>
+<body>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <!-- Title -->
+                    <h1 class="title is-1 publication-title" style="display: flex;flex-direction: row;align-items: center;justify-content: center;margin-bottom: 5px;">
+                        <img src="./static/images/logo.png" width="80" height="60" style="margin-right: 10px;">JavisDiT:
+                    </h1>
+                    <h2 class="title publication-title">Joint Audio-Video Diffusion Transformer with <br> Hierarchical Spatio-Temporal Prior Synchronization</h2>
+
+                    <!-- Authors -->
+                    <div class="is-size-5 publication-authors">   
+                        <span class="author-block"><a href="https://kail8.github.io/">Kai Liu</a><sup>1,2</sup>,</span>
+                        <span class="author-block"><a href="#">Wei Li</a><sup>3</sup>,</span>
+                        <span class="author-block"><a href="#">Lai Chen</a><sup>1</sup>,</span>
+                        <span class="author-block"><a href="https://sqwu.top/">Shengqiong Wu</a><sup>2</sup>,</span>
+                        <span class="author-block"><a href="#">Yanhao Zheng</a><sup>1</sup>,</span>
+                        <span class="author-block"><a href="https://scholar.google.com/citations?user=xp_rICcAAAAJ&hl=zh-CN/">Jiayi Ji</a><sup>2</sup>,</span>
+                        <br>
+                        <span class="author-block"><a href="#">Fan Zhou</a><sup>1</sup>,</span>
+                        <span class="author-block"><a href="#">Rongxin Jiang</a><sup>1</sup>,</span>
+                        <span class="author-block"><a href="https://haofei.vip/">Hao Fei</a><sup>2*</sup>,</span>
+                        <span class="author-block"><a href="https://www.cs.rochester.edu/u/jluo/">Jiebo Luo</a><sup>4</sup>,</span>
+                        <span class="author-block"><a href="https://www.chuatatseng.com/">Tat-Seng Chua</a><sup>2</sup>,</span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors" style="margin-top: 10px;">
+                        <span class="author-block" style="font-size: 18px;"><sup>1</sup> Zhejiang University,</span>
+                        <span class="author-block" style="font-size: 18px;"><sup>2</sup> National University of Singapore,</span>
+                        <br>
+                        <span class="author-block" style="font-size: 18px;"><sup>3</sup> University of Science and Technology of China,</span>
+                        <span class="author-block" style="font-size: 18px;"><sup>4</sup> University of Rochester</span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block" style="font-size: 15px;">Work in progress (<sup>*</sup>Correspondence)</span>
+                    </div>
+
+                    <!-- Links
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <span class="link-block">
+                                <a href="https://arxiv.org/pdf/2309.05519.pdf" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                                    <span>Paper</span>
+                                </a>
+                            </span>
+
+                            <span class="link-block">
+                                <a href="https://acc414b22d6839d28f.gradio.live" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon"><i class="fa fa-laugh"></i></span>
+                                    <span>Demo</span>
+                                </a>
+                            </span>
+
+                            <span class="link-block">
+                                <a href="https://github.com/NExT-GPT/NExT-GPT" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon"><i class="fab fa-github"></i></span>
+                                    <span>Code</span>
+                                </a>
+                            </span>
+
+                            <span class="link-block">
+                                <a href="https://github.com/NExT-GPT/NExT-GPT" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon"><i class="fa fa-database"></i></span>
+                                    <span>Dataset</span>
+                                </a>
+                            </span>
+
+                            <span class="link-block">
+                                <a href="https://www.youtube.com/watch?v=aqw2SCWeWD0" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                                    <span>Video</span>
+                                </a>
+                            </span>
+
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- <section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-2">Video Presentation</h2>
+                <div class="publication-video">
+                    <iframe src="https://www.youtube.com/embed/aqw2SCWeWD0?si=jIKgOkew2rmRROUy"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-2">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        This paper introduces JavisDiT, a novel Joint Audio-Video Diffusion Transformer designed for synchronized audio-video generation (JAVG). 
+                        Built upon the powerful Diffusion Transformer (DiT) architecture, JavisDiT is able to generate high-quality audio and video content simultaneously from open-ended user prompts. 
+                        To ensure optimal synchronization, we introduce a fine-grained spatio-temporal alignment mechanism through a Hierarchical Spatial-Temporal Synchronized Prior (HiST-Sypo) Estimator. 
+                        This module extracts both global and fine-grained spatio-temporal priors, guiding the synchronization between the visual and auditory components. 
+                        Furthermore, we propose a new benchmark, JavisBench, consisting of 10,140 high-quality text-captioned sounding videos spanning diverse scenes and complex real-world scenarios. 
+                        Further, we specifically devise a robust metric for evaluating the synchronization between generated audio-video pairs in real-world complex content. 
+                        Experimental results demonstrate that JavisDiT significantly outperforms existing methods by ensuring both high-quality generation and precise synchronization, setting a new standard for JAVG tasks.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <br>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered has-text-centered">
+            <h2 class="title is-2">Technical Description</h2>
+            <br>
+        </div>
+
+        <!-- Motivation -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h4 class="title is-3">• Motivation</h4>
+
+                <div class="content has-text-justified">
+                    <p>
+                        <b>JAVG Requirements:</b>
+                        (1) High-quality single-modality generation; (2) Fine-grained inter-modality synchronization.
+                    </p>
+
+                    <img class="columns is-centered has-text-centered" src="./static/images/motivation.png" alt="Teaser" width="45%"
+                         style="margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center; color: #061E61;">
+                            <b>Figure 1:</b> Given the input text prompt, a JAVG system generates a spatial-temporally synchronized sounding video. 
+                            The sounds align perfectly with the temporal progression of the actions.
+                        </p>
+                    </figcaption>
+                    <br>
+                    <p>
+                    <ul>
+                        <li>
+                            <b>Spatial Synchronization.</b>
+                            Specific objects (e.g., alien dog) in video shall make specific sounds (e.g., mechanical barking) in audio.
+                        </li>
+                        <li>
+                            <b>Temporal Synchronization.</b>
+                            Sound's starting and ending timestamp in audio shall align with event's happening and vanishing timestamp in video.
+                        </li>
+                        <li>
+                            <b>Spatio-Temporal Synchronization.</b>
+                            Different objects in video shall make different sounds in audio and perfectly start/end at corresponding timestamps.
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h4 class="title is-3">• JavisDiT Architecture</h4>
+
+                <div class="content has-text-justified">
+                    <img class="columns is-centered has-text-centered" src="./static/images/framework.png" alt="Teaser" width="85%"
+                         style="margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center; color: #061E61;">
+                            <b>Figure 2:</b> JavisDiT is built on top of STDiT blocks with two branches for joint audio-video generation.
+                            Spatio-temporal priors and bidirectional across-attention are utilized to ensure synchronized generation.
+                            <!-- We estimate fine-grained spatio-temporal priors from text inputs to guide the generating synchronization for both audios and videos.
+                            An extra bidirectional cross attention module is inserted in each STDiT block for effective information exchange between audios and videos. -->
+                        </p>
+                    </figcaption>
+                    <br>
+                    <p>
+                    <ul>
+                        <li>
+                            <b>Overall Architecture.</b> 
+                            Video (frame sequence) and audio (mel-spectrogram) representations are unified as 4D tensors with shape of [B, T, S, C],
+                            processed by sequential spatial-temporal self-attention or cross-attention blocks to comprise the scalable STDiT architecture.
+                        </li>
+                        <li>
+                            <b>Hierarchical Spatio-Temporal Prior.</b>
+                            The coarse-grained st-prior is inherited from original text-encoder (T5-xxl), which encodes the overall souding-event description.
+                            The fine-grained st-prior is estimated from our proposed estimator, which infers to where and when this event will happen and end.
+                        </li>
+                        <li>
+                            <b>Multi-Stage Training Pipeline.</b>
+                            The training pipeline is divided into three stages:
+                            (1) audio pretraining: extending the video generation branch to a new audio generation branch with 788K audio-text pairs.
+                            (2) st-prior estimation: learning the hierarchical prior estimator by contrastive learning with various negative (asynchronized) audio-video construction strategies.
+                            (3) joint av-generation: training the interactive modules (ST-CrossAttn and BiCorssAttn) to empower synchronized JAVG, where modules learned in previous steps are frozen.
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benchmark -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">• JavisBench Benchmark</h2>
+
+                <div class="content has-text-justified">
+                    <p>
+                        A strong generative model must ensure diverse video content, audio types, and fine-grained spatio-temporal synchronization. 
+                        However, current JAVG benchmarks might lack diversity and robustness for comprehensive evaluation. 
+                        For instance, AIST++ contains only 20 samples for human dancing, while Landscape comprises 100 entries on landscapes merely.
+                        To combat this shortcoming, we propose a more challenging benchmark named JavisBench, 
+                        consisting of <b>10,140 samples</b> from multiple data sources across various real-world scenarios.
+                        We also leverage Qwen-LLM families to annotate visual-audio attributes for each sample, 
+                        including <b>event scenario, visual style, sound type, and spatial-temporal composition for sounding events</b>.
+                        We hope the hierarchical attribute annotations can support in-depth analysis for different JAVG scenarios, 
+                        and inspire the community to derive more applicable JAVG models in real-world.
+                    </p>
+                    <br>
+                    <img class="columns is-centered has-text-centered" src="./static/images/benchmark.png" alt="Teaser" width="90%"
+                         style="margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center; color: #061E61;">
+                            <b>Figure 3:</b> Large-scale and diversified JavisBench dataset supports in-depth spatio-temporal synchronization analysis.
+                        </p>
+                    </figcaption>
+                </div>
+                <br/>
+
+                <h4 class="title is-4">JavisScore Metric</h4>
+                <p>
+                    We have also noticed that AV-Align, the widely-adopted metric to evaluate synchronization degree of generated audio-video pairs,
+                    may struggle with complex scenarios (i.e., with multiple sounding events or subtle vi- sual movements) and produce misleading results.
+                    Therefore, we propose a more robust evaluation metric, namely JavisScore, to measure visual-audio synchro- nization in diverse, real-world contexts.
+                    We also provide a human-labeled dataset for quantitative evaluation for the accuracy and reliability of different synchronization metric,
+                    which contains 3,000 synchronized and asynchronized audio-video pairs from diverse data sources and scenarios.
+                    We look forward to a 100% perfect synchronization metric to greatly promote the development of the JAVG community.
+                </p>
+                <img class="columns is-centered has-text-centered" src="./static/images/metric.png" alt="Teaser" width="100%" style="margin:20px auto 0">
+                <br>
+                <figcaption>
+                    <p style="text-align: center; color: #061E61;">
+                        <b>Figure 4:</b> Qualitative and quantitative comparison with previous AV-Synchronization metric.
+                    </p>
+                </figcaption>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered has-text-centered">
+            <h2 class="title is-2">Demonstrations</h2>
+            <br>
+        </div>
+
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <br/>
+                <h3 class="title is-4">• Application-1: High-Resolution Sounding-Video Generation</h3>
+                <div class="content has-text-justified">
+
+                    <div class="wrapper javg-case">
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                A group of three small birds with vibrant green plumage and distinctive yellow heads are perched on a branch in a serene woodland area. 
+                                The trees around them have dry, leafless branches and autumnal foliage. 
+                                The birds are engaged in various activities, such as grooming themselves and looking around, while light chirping fills the air.
+                            </p>
+                        </div>
+                        <video style="width: 48%; text-align: center;" controls>
+                            <source src="./static/demos/Fig7-JAVG/case1.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                In a post-apocalyptic urban landscape, the city is filled with rubble, debris, and damaged structures. 
+                                Tall buildings, power lines, and industrial elements are scattered throughout, creating a dystopian cityscape. 
+                                The sounds of debris falling, broken glass shattering, and occasional explosions or fires can be heard in the background.
+                            </p>
+                        </div>
+                        <video style="width: 48%; text-align: center;" controls>
+                            <source src="./static/demos/Fig7-JAVG/case2.mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <br/>
+                <h3 class="title is-4">• Application-2: Diversified Sounding-Video Generation</h3>
+                <div class="content has-text-justified">
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Industrial</div>
+                            <div class="row dim2">Camera</div>
+                            <div class="row dim3">Ambient,Mechanical</div>
+                            <div class="row dim4">Multiple</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                In a factory, a person is welding a metal structure while wearing protective gear. 
+                                Various tools and equipment are visible in background. 
+                                The sound of welding is prominent, accompanied by the continuous hum of a heavy engine 
+                                and occasional generic impact sounds.
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case1.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Urban</div>
+                            <div class="row dim2">Camera</div>
+                            <div class="row dim3">Music,Speech</div>
+                            <div class="row dim4">Multiple</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                There is a large, enthusiastic crowd illuminated by vibrant lights. 
+                                A live performance features a steel guitar melody, acoustic rhythm guitar chords, 
+                                and passionate male vocals. 
+                                Crowd noises add to the lively ambiance, making it both emotional and spirited.
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case2.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Natural</div>
+                            <div class="row dim2">Camera</div>
+                            <div class="row dim3">Ambient,Musical</div>
+                            <div class="row dim4">Multiple</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                An aerial shot captures the rugged coastal landscape with dramatic cliffs and rocky outcrops. 
+                                Waves crash against the rocks. A tambourine adds rhythmic the beat. 
+                                The combination of the natural coastal sounds and the upbeat music enhances the overall 
+                                serene of the scene.
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case3.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Urban</div>
+                            <div class="row dim2">3D-Animate</div>
+                            <div class="row dim3">Ambient,Mechanical</div>
+                            <div class="row dim4">Multiple</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                A chaotic battlefield with a tank in the background fires, 
+                                causing a large explosion and fire in one of the buildings. 
+                                The setting is in a realistic 3D animation. 
+                                Soldiers, wearing helmets and military uniforms, are visible, with one aiming a weapon in the foreground. 
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case4.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Virtual</div>
+                            <div class="row dim2">2D-Animate</div>
+                            <div class="row dim3">Ambient,Musical</div>
+                            <div class="row dim4">Multiple,Off-screen</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                A fantastical landscape features vibrant, colorful rock formations, a flowing river, 
+                                and autumnal trees set against a surreal backdrop with a large, glowing planet in the sky. 
+                                The scene is animated in vivid 2D, blending natural and alien elements, with music playing in background.
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case5.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Natural</div>
+                            <div class="row dim2">Camera</div>
+                            <div class="row dim3">Biological</div>
+                            <div class="row dim4">Single</div>
+                            <div class="row dim5">Single</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                A young monkey with light-colored fur, possibly white or cream, 
+                                lies playfully on the ground surrounded by fallen leaves and twigs. 
+                                It has a round, expressive face with large, dark eyes and a small nose, 
+                                and its mouth is open as if it is smiling or making a sound. 
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case6.mp4">
+                        </video>
+                    </div>
+
+                    <div class="wrapper javg-case">
+                        <div class="label" style="width: 20%">
+                            <div class="row dim1">Natural</div>
+                            <div class="row dim2">Camera</div>
+                            <div class="row dim3">Ambient,Biological</div>
+                            <div class="row dim4">Multiple</div>
+                            <div class="row dim5">Simultaneous</div>
+                        </div>
+                        <div style="width: 48%; text-align: center;">
+                            <p>
+                                A small bird, possibly a wren, perches on a branch in a dense forest, 
+                                preening its feathers with brownish plumage and a short tail. 
+                                Rain falls and wind blows through the trees, 
+                                creating a soothing backdrop as the bird cleans and arranges its feathers.
+                            </p>
+                        </div>
+                        <video style="width: 28%; text-align: center;" controls>
+                            <source src="./static/demos/FigA9-JAVG/case7.mp4">
+                        </video>
+                    </div>
+
+                </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">Related Links</h2>
+
+                <div class="content has-text-justified">
+                    <p>
+                        You may refer to related work that serves as foundations for our framework and code repository,
+                        such as <a href="https://github.com/hpcaitech/Open-Sora">Open-Sora</a>,
+                        <a href="https://github.com/facebookresearch/ImageBind">ImageBind</a>,
+                        and <a href="https://github.com/haoheliu/AudioLDM2">AudioLDM2</a>.
+                        We also partially draw inspirations from 
+                        <a href="https://github.com/PKU-YuanGroup/Open-Sora-Plan">Open-Sora-Plan</a>,
+                        <a href="https://github.com/IDEA-Research/GroundingDINO">GroundingDINO</a>,
+                        and <a href="https://github.com/open-mmlab/FoleyCrafter">FoleyCrafter</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>
+            @inproceedings{
+            }
+        </code></pre>
+    </div>
+</section> -->
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p style="text-align: center;">
+                        The webpage is built based on <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
