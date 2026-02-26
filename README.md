@@ -1,7 +1,7 @@
 # JavisDiT
 ## Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization
 
-This is the repository that contains the source code for the [JavisDiT project page](https://javisdit.github.io/).
+This is the repository that contains the source code for the [JavisDiT project page](https://javisverse.github.io/JavisDiT-page/).
 
 If you use JavisDiT in your project, please kindly cite:
 ```
